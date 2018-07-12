@@ -12,7 +12,101 @@ void setUp(void) {}
 
 void tearDown(void) {}
 
-void test_parseTextAndAssignValues_given_no_table_mapping_should_throw_ERR_TABLE_IS_MISSING(void) {
+/*void test_compare_mango_return_true(void)
+{
+  char *line = "mango";
+
+  TEST_ASSERT_TRUE(parseAndCompare(&line,"mango"));
+}
+
+void test_compare_space_mANgo_return_true(void)
+{
+  char *line = "   mANgo";
+
+  TEST_ASSERT_TRUE(parseAndCompare(&line,"mANgo"));
+}
+
+void test_compare_mANgo_space_return_true(void)
+{
+  char *line = "mANgo    ";
+
+  TEST_ASSERT_TRUE(parseAndCompare(&line,"mANgo"));
+}
+
+void test_compare_happy_return_false(void)
+{
+  char *line = "happy";
+
+  TEST_ASSERT_FALSE(parseAndCompare(&line,"mANgo"));
+}
+
+void test_compare_length_of_mango_is_5_return_5(void)
+{
+  char *line = "mango";
+
+  TEST_ASSERT_EQUAL(5,LengthOfMsg(line));
+}
+
+void test_compare_length_of_mango_is_7_return_7(void)
+{
+  char *line = "mango__";
+
+  TEST_ASSERT_EQUAL(7,LengthOfMsg(line));
+}
+
+void test_parseAndCompare_given_assign_with_extra_trailing_space_should_return_true(void)
+{
+  char *line ="assign";
+  char *originalLine = line;
+
+  TEST_ASSERT_TRUE (parseAndCompare(&line,"assign"));
+  TEST_ASSERT_EQUAL_PTR (originalLine + 6, line);
+}
+
+void test_parseAndCompare_given_assign_with_extra_trailing_space_should_return_false(void)
+{
+  char *line = "assn";
+  char *originalLine = line;
+
+  TEST_ASSERT_FALSE (parseAndCompare(&line,"assign"));
+  TEST_ASSERT_EQUAL_PTR (originalLine, line);
+}
+
+void test_parseAndConvertToNum_given_string_456_with_trailing_space_expect_return_number_456 (void){
+  char *line = " 456 ";
+  char *originalLine = line;
+
+  int v = parseAndConvertToNum (&line);
+  //TEST_ASSERT_EQUAL (456,v);
+  TEST_ASSERT_EQUAL_PTR (originalLine + 5, line);
+}*/
+
+// assign orange  = 21346 apple = 1 lemon=10
+/*void test_parseTextAndAssignValues_given_orange_21346_apple_1_lemon_10_should_assigned_correctly(void) {
+  CEXCEPTION_T e;
+  int orange = 0, apple = 0, lemon = 0;
+  VariableMapping varTableMapping[] = {
+    {"apple", &apple},
+    {"orange", &orange},
+    {"lemon", &lemon},
+    {NULL, NULL},
+  };
+  char *line = "assign orange  = 21346 apple = 1 lemon=10";
+
+  Try {
+    parseTextAndAssignValues(line, varTableMapping);
+
+    TEST_ASSERT_EQUAL(21346, orange);
+    TEST_ASSERT_EQUAL(1, apple);
+    TEST_ASSERT_EQUAL(10, lemon);
+  } Catch(e) {
+    printf(e->errorMsg);
+    freeError(e);
+  }
+}
+
+void test_parseTextAndAssignValues_given_no_table_mapping_should_throw_ERR_TABLE_IS_MISSING(void)
+{
   CEXCEPTION_T e;
   char *line = " assign mango = 589 ";
 
@@ -59,31 +153,7 @@ void test_parseTextAndAssignValues_given_input_command_is_NULL_should_do_nothing
     printf(e->errorMsg);
     freeError(e);
   }
-}
-
-// assign orange  = 21346 apple = 1 lemon=10
-void test_parseTextAndAssignValues_given_orange_21346_apple_1_lemon_10_should_assigned_correctly(void) {
-  CEXCEPTION_T e;
-  int orange = 0, apple = 0, lemon = 0;
-  VariableMapping varTableMapping[] = {
-    {"apple", &apple},
-    {"orange", &orange},
-    {"lemon", &lemon},
-    {NULL, NULL},
-  };
-  char *line = "assign orange  = 21346 apple = 1 lemon=10";
-
-  Try {
-    parseTextAndAssignValues(line, varTableMapping);
-
-    TEST_ASSERT_EQUAL(21346, orange);
-    TEST_ASSERT_EQUAL(1, apple);
-    TEST_ASSERT_EQUAL(10, lemon);
-  } Catch(e) {
-    printf(e->errorMsg);
-    freeError(e);
-  }
-}
+}*/
 
 void test_parseTextAndAssignValues_given_melon_and_value_with_trailing_spaces_should_parse_properly(void) {
   CEXCEPTION_T e;
@@ -103,7 +173,7 @@ void test_parseTextAndAssignValues_given_melon_and_value_with_trailing_spaces_sh
   }
 }
 
-void test_parseTextAndAssignValues_given_text_without_assign_should_throw_ERR_UNKNOWN_COMMAND(void) {
+/*void test_parseTextAndAssignValues_given_text_without_assign_should_throw_ERR_UNKNOWN_COMMAND(void) {
   CEXCEPTION_T e;
   int papaya = 0;
   VariableMapping varTableMapping[] = {
@@ -178,4 +248,4 @@ void test_parseTextAndAssignValues_given_malform_ciku_without_number_should_thro
     TEST_ASSERT_EQUAL(ERR_NOT_A_NUMBER, e->errorCode);
     freeError(e);
   }
-}
+}*/
