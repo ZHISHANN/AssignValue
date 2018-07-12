@@ -7,10 +7,6 @@
 
 int parseTextAndAssignValues(char **line, VariableMapping *varTableMapping)
 {
-  char *temp_line;
-  int i; 
-  temp_line = malloc(256);
-
   if((*line) == NULL)
     return 1;
 
@@ -18,19 +14,20 @@ int parseTextAndAssignValues(char **line, VariableMapping *varTableMapping)
   {
     throwSimpleError(5,"ERR_TABLE_IS_MISSING");
   }
-  
+
   else //table not null
   {
     //check got "assign" or not
-    if(parseAndCompare(line,"assign"))  
+    if(parseAndCompare(line,"assign"))
     {
-      while((*line) != NULL) 
+      while(varTableMapping->name != '\0')
       {
         if(parseAndCompare(line,varTableMapping->name)) //find the name in table
         {
           if(parseAndCompare(line,"=")) // "=" was found
           {
-			  *varTableMapping->storage = parseAndConvertToNum(line);    //find the relevant name and convert to num
+			        *varTableMapping->storage = parseAndConvertToNum(line);    //find the relevant name and convert to num
+              varTableMapping++;
           }
           else // error if no "="
             throwSimpleError(4,"ERR_MALFORM_ASSIGN");
@@ -49,39 +46,56 @@ int parseTextAndAssignValues(char **line, VariableMapping *varTableMapping)
 int parseAndCompare(char **linePtr, char *cmpStr)
 {
 	int move = 0;
-	  
-	if (isspace(**linePtr) && *cmpStr == '\0')     // linePtr is a blank space and cmpStr reach NULL should
-		return 1;								   // return 1
-		  
-	else if (isspace(*cmpStr))    // ignore space
+
+	if (**linePtr == '\0')     // linePtr is a blank space//
+		return 1;		             // return 1
+
+  else if ((**linePtr) == '\0' && *cmpStr == '\0')  // linePtr & cmpStr reach end
+	  return 1;
+
+	else if (isspace(*cmpStr))    // ignore space//
 		cmpStr++;
-		  
-	else if (isspace(**linePtr))  
+
+	else if (isspace(**linePtr))
 	{
-		(*linePtr)++;             // ignore space
+		(*linePtr)++;             // ignore space//
 		move++;                   // move pointer
 	}
-	  
-	else if ((**linePtr) == '=' && (*cmpStr) == '=')  // if "=" was found should return 1
+
+	else if (**linePtr == '=')  // if "=" was found should return 1//
 	{
 		(*linePtr)++;
 		return 1;
 	}
-	  
-	else if (**linePtr != '\0' || *cmpStr != '\0')  // if not NULL
+
+	else if (tolower(**linePtr) == tolower(*cmpStr))  // if not NULL//
 	{
-		if (tolower(**linePtr) == tolower(*cmpStr))  // compare if equal
+		while ((tolower(**linePtr) == tolower(*cmpStr)) && (**linePtr != '\0' || *cmpStr != '\0'))  // compare if equal//
 		{
 		  (*linePtr)++;
 		  cmpStr++;
 		  move++;
 		}
-		else // if compare not equal, pointer move back
-		{
-		  (*linePtr) -= move;
-		  return 0;
-		}
+
+    if (tolower(**linePtr) == tolower(*cmpStr) || isspace(**linePtr) || *cmpStr == '\0')
+    {
+      if (isspace(**linePtr) || **linePtr == '\0' || *cmpStr == '\0')
+        return 1;
+      else
+        return 0;
+    }
+    else
+    {
+      (*linePtr) -= move;
+      return 0;
+    }
 	}
+
+  else
+  {
+    (*linePtr) -= move;
+		return 0;
+  }
 }
 
 int parseAndConvertToNum(char **linePtr)
@@ -89,11 +103,13 @@ int parseAndConvertToNum(char **linePtr)
 	int dec = 0;
 
 	while(**linePtr != '\0')
-   {
+  {
 		if (isspace(**linePtr))
 		{
 		  (*linePtr)++;
 		}
+    else if (isdigit(**linePtr) == 0)
+      return 0;
 		else
 		{
 		  dec = dec * 10 + (**linePtr - '0' );

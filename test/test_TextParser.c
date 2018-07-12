@@ -12,14 +12,14 @@ void setUp(void) {}
 
 void tearDown(void) {}
 
-void xtest_parseAndCompare_given_assign_with_spaces_and_assign_expect_return_true(void)
+void test_parseAndCompare_given_assign_with_spaces_and_assign_expect_return_true(void)
 {
   char *line = "    assign  melon = 4";
 
   TEST_ASSERT_TRUE(parseAndCompare(&line,"assign"));
 }
 
-/*void test_compare_mango_return_true(void)
+void test_compare_mango_return_true(void)
 {
   char *line = "mango";
 
@@ -45,9 +45,9 @@ void test_compare_happy_return_false(void)
   char *line = "happy";
 
   TEST_ASSERT_FALSE(parseAndCompare(&line,"mANgo"));
-}*/
+}
 
-/*void test_parseAndCompare_given_assign_with_extra_trailing_space_should_return_true(void)
+void test_parseAndCompare_given_assign_with_extra_trailing_space_should_return_true(void)
 {
   char *line ="assign";
   char *originalLine = line;
@@ -56,7 +56,7 @@ void test_compare_happy_return_false(void)
   TEST_ASSERT_EQUAL_PTR (originalLine + 6, line);
 }
 
-void test_parseAndCompare_given_assign_with_extra_trailing_space_should_return_false(void)
+void test_parseAndCompare_given_assign_with_should_return_false(void)
 {
   char *line = "assn";
   char *originalLine = line;
@@ -72,7 +72,14 @@ void test_parseAndConvertToNum_given_string_456_with_trailing_space_expect_retur
   int v = parseAndConvertToNum (&line);
   TEST_ASSERT_EQUAL (456,v);
   TEST_ASSERT_EQUAL_PTR (originalLine + 5, line);
-}*/
+}
+
+void test_parseAndConvertToNum_given_string_grape_with_trailing_space_expect_return_number_456 (void){
+  char *line = " grape ";
+  char *originalLine = line;
+
+  TEST_ASSERT_FALSE (parseAndConvertToNum (&line));
+}
 
 // assign orange  = 21346 apple = 1 lemon=10
 /*void test_parseTextAndAssignValues_given_orange_21346_apple_1_lemon_10_should_assigned_correctly(void) {
@@ -149,6 +156,24 @@ void test_parseTextAndAssignValues_given_input_command_is_NULL_should_do_nothing
 }*/
 
 void test_parseTextAndAssignValues_given_melon_and_value_should_parse_properly(void) {
+  CEXCEPTION_T e;
+  int melon = 0;
+  VariableMapping varTableMapping[] = {
+    {"melon", &melon},
+    {NULL, NULL},
+  };
+  char *line = "assignmelon=89";
+
+  Try {
+    parseTextAndAssignValues(&line, varTableMapping);
+    TEST_ASSERT_EQUAL(89, melon);
+  } Catch(e) {
+    printf(e->errorMsg);
+    freeError(e);
+  }
+}
+
+void test_parseTextAndAssignValues_given_melon_and_value_with_space_should_parse_properly(void) {
   CEXCEPTION_T e;
   int melon = 0;
   VariableMapping varTableMapping[] = {
