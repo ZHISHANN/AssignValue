@@ -77,7 +77,7 @@ void test_parseAndConvertToNum_given_string_456_with_trailing_space_expect_retur
   char *originalLine = line;
 
   int v = parseAndConvertToNum (&line);
-  //TEST_ASSERT_EQUAL (456,v);
+  TEST_ASSERT_EQUAL (456,v);
   TEST_ASSERT_EQUAL_PTR (originalLine + 5, line);
 }
 

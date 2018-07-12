@@ -96,7 +96,6 @@ int parseAndConvertToNum(char **linePtr)
   {
     if (isspace(**linePtr))
     {
-      dec = dec * 10 + (**linePtr - '0' );
       (*linePtr)++;
     }
     else
