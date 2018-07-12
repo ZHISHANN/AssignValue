@@ -55,13 +55,13 @@ int parseAndCompare(char **linePtr, char *cmpStr)
 {
   int move = 0;
 
-  if((**linePtr) == '=' && (*cmpStr) == '=')
+  /*if((**linePtr) == '=' && (*cmpStr) == '=')
   {
    (*linePtr)++;
    return 1;
-  }
+  }*/
 
-  if (**linePtr != '\0' || *cmpStr != '\0')
+  while (**linePtr != '\0' || *cmpStr != '\0')
   {
     if (tolower(**linePtr) == tolower(*cmpStr))
     {
@@ -108,11 +108,11 @@ int parseAndConvertToNum(char **linePtr)
   return dec;
 }
 
-/*int LengthOfMsg(char *msg)
+int LengthOfMsg(char *msg)
 {
 	int length = 0;
 
 	while(msg[length] != '\0')
 		length++;
 		return length;
-}*/
+}

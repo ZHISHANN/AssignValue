@@ -12,7 +12,7 @@ void setUp(void) {}
 
 void tearDown(void) {}
 
-/*void test_compare_mango_return_true(void)
+void test_compare_mango_return_true(void)
 {
   char *line = "mango";
 
@@ -40,14 +40,14 @@ void test_compare_happy_return_false(void)
   TEST_ASSERT_FALSE(parseAndCompare(&line,"mANgo"));
 }
 
-void test_compare_length_of_mango_is_5_return_5(void)
+void xtest_compare_length_of_mango_is_5_return_5(void)
 {
   char *line = "mango";
 
   TEST_ASSERT_EQUAL(5,LengthOfMsg(line));
 }
 
-void test_compare_length_of_mango_is_7_return_7(void)
+void xtest_compare_length_of_mango_is_7_return_7(void)
 {
   char *line = "mango__";
 
@@ -79,7 +79,7 @@ void test_parseAndConvertToNum_given_string_456_with_trailing_space_expect_retur
   int v = parseAndConvertToNum (&line);
   //TEST_ASSERT_EQUAL (456,v);
   TEST_ASSERT_EQUAL_PTR (originalLine + 5, line);
-}*/
+}
 
 // assign orange  = 21346 apple = 1 lemon=10
 /*void test_parseTextAndAssignValues_given_orange_21346_apple_1_lemon_10_should_assigned_correctly(void) {
@@ -155,7 +155,7 @@ void test_parseTextAndAssignValues_given_input_command_is_NULL_should_do_nothing
   }
 }*/
 
-void test_parseTextAndAssignValues_given_melon_and_value_with_trailing_spaces_should_parse_properly(void) {
+/*void test_parseTextAndAssignValues_given_melon_and_value_with_trailing_spaces_should_parse_properly(void) {
   CEXCEPTION_T e;
   int melon = 0;
   VariableMapping varTableMapping[] = {
@@ -171,7 +171,7 @@ void test_parseTextAndAssignValues_given_melon_and_value_with_trailing_spaces_sh
     printf(e->errorMsg);
     freeError(e);
   }
-}
+}*/
 
 /*void test_parseTextAndAssignValues_given_text_without_assign_should_throw_ERR_UNKNOWN_COMMAND(void) {
   CEXCEPTION_T e;
