@@ -7,7 +7,7 @@ struct VariableMapping {
   int *storage;
 };
 
-int parseTextAndAssignValues(char *line, VariableMapping *varTableMapping);
+int parseTextAndAssignValues(char **line, VariableMapping *varTableMapping);
 
 /**
   *Parse and compare strings. It ignores all spaces. If
