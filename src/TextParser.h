@@ -2,7 +2,8 @@
 #define _TEXTPARSER_H
 
 typedef struct VariableMapping VariableMapping;
-struct VariableMapping {
+struct VariableMapping
+{
   char *name;
   int *storage;
 };
