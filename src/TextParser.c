@@ -7,6 +7,18 @@
 #include "TextParser.h"
 #include "Error.h"
 
+/**********************************************************************
+* check the content in line , if NULL return 1                        *
+* check the table , if empty return error msg                         *
+* if table not empty , compare and fnd the word "assign" of line      *
+* if "assign" was not found return error msg                          *
+* if "assign" was found , check for the content in varTableMapping    *
+* if the content of line does not appear in table , return error msg  *
+* if the content of both condition was match , chack for the "=" sign *
+* if "=" was found , convert the content of line into number          *
+* if "=" was not found , return error msg                             *
+**********************************************************************/
+
 int parseTextAndAssignValues(char **line, VariableMapping *varTableMapping)
 {
   char *temp = varTableMapping;
@@ -16,7 +28,7 @@ int parseTextAndAssignValues(char **line, VariableMapping *varTableMapping)
 
   if(varTableMapping == NULL)   // error if no table provided
   {
-      throwSimpleError(ERR_TABLE_IS_MISSING,"ERR_TABLE_IS_MISSING");
+      throwSimpleError(ERR_TABLE_IS_MISSING,"ERR : Table was not found/missing.");
   }
   else //table not null
   {
@@ -29,21 +41,21 @@ int parseTextAndAssignValues(char **line, VariableMapping *varTableMapping)
 
         if(parseAndCompare(line,varTableMapping->name)) //find the name in table
         {
-            if (parseAndCompare(line,"=")) // "=" was found)
+            if (parseAndCompare(line,"=")) // "=" was found
   			    {
               *varTableMapping->storage = parseAndConvertToNum(line);    //find the relevant name and convert to num
-               varTableMapping = temp;
+               varTableMapping = temp;                                   // start over again to search the name
             }
              else // error if no "="
-               throwSimpleError(ERR_MALFORM_ASSIGN,"ERR_MALFORM_ASSIGN");
+               throwSimpleError(ERR_MALFORM_ASSIGN,"ERR : The = sign was not found/missing.");
         }
-        else
+        else  // increase pointer to continue search name in table
           varTableMapping++;
-      }
-      throwSimpleError(ERR_UNKNOWN_VARIABLE,"ERR_UNKNOWN_VARIABLE");
+      }  // error if the content od line does not match to table
+      throwSimpleError(ERR_UNKNOWN_VARIABLE,"ERR : The variable was not found/given in the table provided.");
     }
-    else  // error if no assign
-      throwSimpleError(ERR_UNKNOWN_COMMAND,"ERR_UNKNOWN_COMMAND");
+    else  // error if no "assign"
+      throwSimpleError(ERR_UNKNOWN_COMMAND,"ERR : The word assign was not found/missing.");
   }
 
 }
@@ -55,7 +67,7 @@ int parseAndCompare(char **linePtr, char *cmpStr)
   while (isspace(**linePtr))
   {
 		(*linePtr)++;             // ignore space
-  	move++;                   // move pointer
+  	move++;                   // increase pointer
   }
 
   while (isspace(*cmpStr))    // ignore space
@@ -77,7 +89,7 @@ int parseAndCompare(char **linePtr, char *cmpStr)
 
 	else if (tolower(**linePtr) == tolower(*cmpStr))   // if two string are equal
 	{
-		while ((tolower(**linePtr) == tolower(*cmpStr)) && (**linePtr != '\0' || *cmpStr != '\0'))  // compare if equal//
+		while ((tolower(**linePtr) == tolower(*cmpStr)) && (**linePtr != '\0' || *cmpStr != '\0'))
 		{
 		  (*linePtr)++;
 		  cmpStr++;
@@ -107,30 +119,30 @@ int parseAndConvertToNum(char **linePtr)
 
   while (isspace(**linePtr))
   {
-    (*linePtr)++;
-    move++;
+    (*linePtr)++;              // ignore the space
+    move++;                    // increase pointer
   }
 
-	while(**linePtr != '\0')
+	while(**linePtr != '\0')       // if contain content
   {
-      if (isdigit(**linePtr))
+      if (isdigit(**linePtr))   // if the content was a number
       {
         dec = dec * 10 + (**linePtr - '0');
   		  (*linePtr)++;
       }
 
-      else
+      else  // the content not a number
       {
         (*linePtr) -= move;
-        throwSimpleError(ERR_NOT_A_NUMBER,"ERR_NOT_A_NUMBER");
+        throwSimpleError(ERR_NOT_A_NUMBER,"ERR : %s was not a number.");
       }
 
-      while ((**linePtr) == ' ')
+      while ((**linePtr) == ' ')  // ignore space
       {
         linePtr++;
         move++;
         return dec;
       }
-	}
+	}  // return the calculated value
   return dec;
 }

@@ -65,7 +65,8 @@ void test_parseAndCompare_given_assign_with_should_return_false(void)
   TEST_ASSERT_EQUAL_PTR (originalLine, line);
 }
 
-void test_parseAndConvertToNum_given_string_456_with_trailing_space_expect_return_number_456 (void){
+void test_parseAndConvertToNum_given_string_456_with_trailing_space_expect_return_number_456 (void)
+{
   char *line = " 456 ";
   char *originalLine = line;
 
@@ -74,22 +75,24 @@ void test_parseAndConvertToNum_given_string_456_with_trailing_space_expect_retur
   TEST_ASSERT_EQUAL_PTR (originalLine + 4, line);
 }
 
-void test_parseAndConvertToNum_given_string_grape_with_trailing_space_expect_return_number_456 (void){
+void test_parseAndConvertToNum_given_string_grape_with_trailing_space_expect_return_number_456 (void)
+{
   CEXCEPTION_T e;
   char *line = " grape ";
   char *originalLine = line;
+
   Try {
   int v = parseAndConvertToNum (&line);
   TEST_FAIL_MESSAGE("Expect ERR_NOT_A_NUMBER. But no exception thrown.");
-} Catch (e) {
-  printf(e->errorMsg);
-  TEST_ASSERT_EQUAL(ERR_NOT_A_NUMBER, e->errorCode);
-  freeError(e);
-  }
+  } Catch (e) {
+    printf(e->errorMsg);
+    TEST_ASSERT_EQUAL(ERR_NOT_A_NUMBER, e->errorCode);
+    freeError(e);
+    }
 }
 
-// assign orange  = 21346 apple = 1 lemon=10
-void test_parseTextAndAssignValues_given_orange_21346_apple_1_lemon_10_should_assigned_correctly(void) {
+void test_parseTextAndAssignValues_given_orange_21346_apple_1_lemon_10_should_assigned_correctly(void)
+{
   CEXCEPTION_T e;
   int orange = 0, apple = 0, lemon = 0;
   VariableMapping varTableMapping[] = {
@@ -99,10 +102,9 @@ void test_parseTextAndAssignValues_given_orange_21346_apple_1_lemon_10_should_as
     {NULL, NULL},
   };
   char *line = "assign orange  = 21346 apple = 1 lemon=10";
-    //cannot detect
+
   Try {
     parseTextAndAssignValues(&line, varTableMapping);
-
     TEST_ASSERT_EQUAL(21346, orange);
     TEST_ASSERT_EQUAL(1, apple);
     TEST_ASSERT_EQUAL(10, lemon);
@@ -115,7 +117,7 @@ void test_parseTextAndAssignValues_given_orange_21346_apple_1_lemon_10_should_as
 void test_parseTextAndAssignValues_given_no_table_mapping_should_throw_ERR_TABLE_IS_MISSING(void)
 {
   CEXCEPTION_T e;
-  char *line = "  assign mango = 589 ";  //??
+  char *line = "  assign mango = 589 ";
 
   Try {
     parseTextAndAssignValues(&line, NULL);
@@ -127,7 +129,8 @@ void test_parseTextAndAssignValues_given_no_table_mapping_should_throw_ERR_TABLE
   }
 }
 
-void test_parseTextAndAssignValues_given_no_command_should_do_nothing(void) {
+void test_parseTextAndAssignValues_given_no_command_should_do_nothing(void)
+{
   CEXCEPTION_T e;
   int tomato = 0;
   VariableMapping varTableMapping[] = {
@@ -145,14 +148,15 @@ void test_parseTextAndAssignValues_given_no_command_should_do_nothing(void) {
   }
 }
 
-void test_parseTextAndAssignValues_given_input_command_is_NULL_should_do_nothing(void) {
+void test_parseTextAndAssignValues_given_input_command_is_NULL_should_do_nothing(void)
+{
   CEXCEPTION_T e;
   int kiwi = 0;
   VariableMapping varTableMapping[] = {
     {"kiwi", &kiwi},
     {NULL, NULL},
   };
-  char *line = "  ";  //infinity loop
+  char *line = "  ";
 
   Try {
     parseTextAndAssignValues(&line, varTableMapping);
@@ -163,14 +167,15 @@ void test_parseTextAndAssignValues_given_input_command_is_NULL_should_do_nothing
   }
 }
 
-void test_parseTextAndAssignValues_given_melon_and_value_should_parse_properly(void) {
+void test_parseTextAndAssignValues_given_melon_and_value_should_parse_properly(void)
+{
   CEXCEPTION_T e;
   int melon = 0;
   VariableMapping varTableMapping[] = {
     {"melon", &melon},
     {NULL, NULL},
   };
-  char *line = "assignmelon=89";  //infinity loop
+  char *line = "assignmelon=89";
 
   Try {
     parseTextAndAssignValues(&line, varTableMapping);
@@ -181,14 +186,15 @@ void test_parseTextAndAssignValues_given_melon_and_value_should_parse_properly(v
   }
 }
 
-void test_parseTextAndAssignValues_given_melon_and_value_with_space_should_parse_properly(void) {
+void test_parseTextAndAssignValues_given_melon_and_value_with_space_should_parse_properly(void)
+{
   CEXCEPTION_T e;
   int melon = 0;
   VariableMapping varTableMapping[] = {
     {"melon", &melon},
     {NULL, NULL},
   };
-  char *line = "assign melon = 89";  //no 89 keep looping
+  char *line = "assign melon = 89";
 
   Try {
     parseTextAndAssignValues(&line, varTableMapping);
@@ -199,7 +205,8 @@ void test_parseTextAndAssignValues_given_melon_and_value_with_space_should_parse
   }
 }
 
-void test_parseTextAndAssignValues_given_text_without_assign_should_throw_ERR_UNKNOWN_COMMAND(void) {
+void test_parseTextAndAssignValues_given_text_without_assign_should_throw_ERR_UNKNOWN_COMMAND(void)
+ {
   CEXCEPTION_T e;
   int papaya = 0;
   VariableMapping varTableMapping[] = {
@@ -218,14 +225,15 @@ void test_parseTextAndAssignValues_given_text_without_assign_should_throw_ERR_UN
   }
 }
 
-void test_parseTextAndAssignValues_given_guava_23_cucumber_92_should_throw_ERR_UNKNOWN_VARIABLE(void) {
+void test_parseTextAndAssignValues_given_guava_23_cucumber_92_should_throw_ERR_UNKNOWN_VARIABLE(void)
+{
   CEXCEPTION_T e;
   int guava = 0;
   VariableMapping varTableMapping[] = {
     {"guava", &guava},
     {NULL, NULL},
   };
-  char *line = "assign guava=23 cucumber=92"; // does not read cucumber
+  char *line = "assign guava=23 cucumber=92";
 
   Try {
     parseTextAndAssignValues(&line, varTableMapping);
@@ -238,7 +246,8 @@ void test_parseTextAndAssignValues_given_guava_23_cucumber_92_should_throw_ERR_U
   }
 }
 
-void test_parseTextAndAssignValues_given_malform_pineapple_without_equal_sign_should_throw_ERR_MALFORM_ASSIGN(void) {
+void test_parseTextAndAssignValues_given_malform_pineapple_without_equal_sign_should_throw_ERR_MALFORM_ASSIGN(void)
+{
   CEXCEPTION_T e;
   int pineapple = 0;
   VariableMapping varTableMapping[] = {
@@ -257,14 +266,15 @@ void test_parseTextAndAssignValues_given_malform_pineapple_without_equal_sign_sh
   }
 }
 
-void test_parseTextAndAssignValues_given_malform_ciku_without_number_should_throw_ERR_NOT_A_NUMBER(void) {
+void test_parseTextAndAssignValues_given_malform_ciku_without_number_should_throw_ERR_NOT_A_NUMBER(void)
+{
   CEXCEPTION_T e;
   int ciku = 0;
   VariableMapping varTableMapping[] = {
     {"ciku", &ciku},
     {NULL, NULL},
   };
-  char *line = "assign ciku =  durian = 6"; //does not detect durian
+  char *line = "assign ciku =  durian = 6";
 
   Try {
     parseTextAndAssignValues(&line, varTableMapping);
